@@ -37,7 +37,11 @@ class IsItMobile
 end
 
 if defined?(ActiveSupport)
-  ActiveSupport.on_load(:action_controller) do
-    Kernel.load File.join(File.dirname(__FILE__), 'rails', 'init.rb')
+  if ActiveSupport.respond_to?(:on_load)
+    ActiveSupport.on_load(:action_controller) do
+      Kernel.load File.join(File.dirname(__FILE__), 'rails', 'init.rb')
+    end
+  else
+    require File.join(File.dirname(__FILE__), 'rails', 'init.rb')
   end
 end
